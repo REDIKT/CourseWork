@@ -17,6 +17,8 @@ export class ClientController {
   constructor(private readonly clientService: ClientService) {}
 
   @ApiOperation({ summary: 'Получение всех клиентов' })
+  @ApiBearerAuth('JWT-auth')
+  @UseGuards(JwtAuthGuard)
   @Get()
   @ApiBearerAuth('JWT-auth')
   findAll() {
@@ -24,6 +26,8 @@ export class ClientController {
   }
 
   @ApiOperation({ summary: 'Получение клиента по id' })
+  @ApiBearerAuth('JWT-auth')
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   @ApiBearerAuth('JWT-auth')
   findOne(@Param('id') id: string) {
@@ -31,6 +35,8 @@ export class ClientController {
   }
 
   @ApiOperation({ summary: 'Получение клиента с ограниченными полями' })
+  @ApiBearerAuth('JWT-auth')
+  @UseGuards(JwtAuthGuard)
   @Get('incomplete')
   findIncomplete(){
     this.clientService.findIncomplete();
@@ -39,8 +45,6 @@ export class ClientController {
   @ApiOperation({ summary: 'Дополнение данных о клиенте' })
   @ApiBearerAuth('JWT-auth')
   @UseGuards(JwtAuthGuard)
-  @Roles(Role.ADMIN)
-  @UseGuards(RolesGuard)
   @Put(':id')
   update(@Param('id') id: string, @Body() updateclient: Client, @Request() req) {
     return this.clientService.update(+id, updateclient);
@@ -52,8 +56,11 @@ export class ClientController {
     return this.clientService.create(createclient);
   }
 
+  @Roles(Role.ADMIN)
+  @UseGuards(RolesGuard)
   @ApiOperation({ summary: 'Удаление данных о клиенте' })
   @ApiBearerAuth('JWT-auth')
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.clientService.remove(+id);
