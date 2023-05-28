@@ -8,7 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(cookieParser())
   const config = new DocumentBuilder()
-    .setTitle('Education API')
+    .setTitle('Storage API')
     .setDescription('The notes API description')
     .setVersion('1.0')
     .addBearerAuth(
