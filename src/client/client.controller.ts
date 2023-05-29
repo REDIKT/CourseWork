@@ -29,7 +29,6 @@ export class ClientController {
   @ApiBearerAuth('JWT-auth')
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  @ApiBearerAuth('JWT-auth')
   findOne(@Param('id') id: string) {
     return this.clientService.findOne(+id);
   }
